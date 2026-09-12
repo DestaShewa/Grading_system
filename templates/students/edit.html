@@ -1,72 +1,209 @@
 {% extends "base.html" %}
 
-{% block title %}Edit Student{% endblock %}
+{% block title %}Edit Student | GradePro{% endblock %}
 
 {% block content %}
 
-<h2>Edit Student</h2>
+<div class="page-header">
 
+```
+<div>
+    <h2>Edit Student</h2>
+
+    <p>
+        Update student information and academic results.
+    </p>
+</div>
+
+<a
+    href="{{ url_for('students.student_list') }}"
+    class="button button-secondary">
+    ← Back
+</a>
+```
+
+</div>
+
+<div class="form-card">
+
+```
 <form method="POST">
 
-```
-<div>
-    <label>Student ID</label>
-    <input
-        type="text"
-        value="{{ student['student_id'] }}"
-        disabled
-    >
-</div>
+    <!-- Student ID -->
 
-<div>
-    <label>Student Name</label>
-    <input
-        type="text"
-        name="name"
-        value="{{ student['name'] }}"
-        required
-    >
-</div>
+    <div class="form-group">
 
-<div>
-    <label>Math</label>
-    <input
-        type="number"
-        name="math"
-        min="0"
-        max="100"
-        value="{{ student['math'] }}"
-        required
-    >
-</div>
+        <label for="student_id">
+            Student ID
+        </label>
 
-<div>
-    <label>English</label>
-    <input
-        type="number"
-        name="english"
-        min="0"
-        max="100"
-        value="{{ student['english'] }}"
-        required
-    >
-</div>
+        <input
+            type="text"
+            id="student_id"
+            value="{{ student['student_id'] }}"
+            disabled>
 
-<div>
-    <label>Science</label>
-    <input
-        type="number"
-        name="science"
-        min="0"
-        max="100"
-        value="{{ student['science'] }}"
-        required
-    >
-</div>
+        <small class="form-help">
+            Student ID cannot be changed.
+        </small>
 
-<button type="submit">Update Student</button>
-```
+    </div>
+
+
+    <!-- Student Name -->
+
+    <div class="form-group">
+
+        <label for="name">
+            Full Name
+        </label>
+
+        <input
+            type="text"
+            id="name"
+            name="name"
+            value="{{ student['name'] }}"
+            placeholder="Enter student's full name"
+            required>
+
+    </div>
+
+
+    <!-- Subjects -->
+
+    <div class="form-row">
+
+        <!-- Mathematics -->
+
+        <div class="form-group">
+
+            <label for="math">
+                Mathematics
+            </label>
+
+            <input
+                type="number"
+                id="math"
+                name="math"
+                value="{{ student['math'] }}"
+                min="0"
+                max="100"
+                step="0.01"
+                placeholder="0 - 100"
+                required>
+
+        </div>
+
+
+        <!-- English -->
+
+        <div class="form-group">
+
+            <label for="english">
+                English
+            </label>
+
+            <input
+                type="number"
+                id="english"
+                name="english"
+                value="{{ student['english'] }}"
+                min="0"
+                max="100"
+                step="0.01"
+                placeholder="0 - 100"
+                required>
+
+        </div>
+
+
+        <!-- Science -->
+
+        <div class="form-group">
+
+            <label for="science">
+                Science
+            </label>
+
+            <input
+                type="number"
+                id="science"
+                name="science"
+                value="{{ student['science'] }}"
+                min="0"
+                max="100"
+                step="0.01"
+                placeholder="0 - 100"
+                required>
+
+        </div>
+
+    </div>
+
+
+    <!-- Current Result -->
+
+    <div class="current-result">
+
+        <div>
+            <span>Current Average</span>
+
+            <strong>
+                {{ "%.1f"|format(student['average']) }}%
+            </strong>
+        </div>
+
+
+        <div>
+            <span>Current Grade</span>
+
+            <strong>
+                {{ student['grade'] }}
+            </strong>
+        </div>
+
+
+        <div>
+            <span>Current Status</span>
+
+            {% if student['status'] == "PASS" %}
+
+                <strong class="result-pass">
+                    PASS
+                </strong>
+
+            {% else %}
+
+                <strong class="result-fail">
+                    FAIL
+                </strong>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- Actions -->
+
+    <div class="form-actions">
+
+        <a
+            href="{{ url_for('students.student_list') }}"
+            class="button button-secondary">
+            Cancel
+        </a>
+
+        <button type="submit">
+            Save Changes
+        </button>
+
+    </div>
 
 </form>
+```
+
+</div>
 
 {% endblock %}

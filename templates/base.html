@@ -7,47 +7,113 @@
 
     <title>{% block title %}Grading System{% endblock %}</title>
 
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='css/style.css') }}"
-    >
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
 
-    <header>
-        <h1>Grading System</h1>
+<div class="app">
 
-        <nav>
-            <a href="/">Dashboard</a>
-            <a href="/students">Students</a>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">G</div>
+
+            <div>
+                <h1>GradePro</h1>
+                <span>Management System</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <p class="nav-label">MAIN</p>
+
+            <a href="{{ url_for('dashboard') }}"
+               class="nav-item">
+                <span class="nav-icon">⌂</span>
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('students.student_list') }}"
+               class="nav-item">
+                <span class="nav-icon">◉</span>
+                Students
+            </a>
+
         </nav>
-    </header>
 
-   <main>
+        <div class="sidebar-footer">
+            <div class="admin-avatar">A</div>
 
-    {% with messages = get_flashed_messages() %}
+            <div>
+                <strong>Administrator</strong>
+                <span>System Admin</span>
+            </div>
+        </div>
 
-        {% if messages %}
+    </aside>
 
-            <div class="messages">
 
-                {% for message in messages %}
-                    <div class="message">
-                        {{ message }}
+    <!-- Main area -->
+    <div class="main-wrapper">
+
+        <header class="topbar">
+
+            <div class="mobile-brand">
+                <strong>GradePro</strong>
+            </div>
+
+            <div class="topbar-right">
+
+                <div class="user-profile">
+                    <div class="user-avatar">A</div>
+
+                    <div class="user-info">
+                        <strong>Administrator</strong>
+                        <span>Admin</span>
                     </div>
-                {% endfor %}
+                </div>
 
             </div>
 
-        {% endif %}
+        </header>
 
-    {% endwith %}
 
-    {% block content %}{% endblock %}
+        <main class="content">
 
-</main>
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages() %}
+
+                {% if messages %}
+
+                    <div class="flash-container">
+
+                        {% for message in messages %}
+
+                            <div class="flash-message">
+                                <span>✓</span>
+                                {{ message }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+            {% endwith %}
+
+
+            {% block content %}{% endblock %}
+
+        </main>
+
+    </div>
+
+</div>
 
 </body>
-
 </html>

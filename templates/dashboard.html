@@ -1,81 +1,248 @@
 {% extends "base.html" %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Dashboard | GradePro{% endblock %}
 
 {% block content %}
 
-<h2>Dashboard</h2>
+<div class="page-header">
+
+    <div>
+        <h2>Dashboard</h2>
+
+        <p>
+            Overview of your student performance.
+        </p>
+    </div>
+
+    <a
+        href="{{ url_for('students.add_student') }}"
+        class="button">
+        + Add Student
+    </a>
+
+</div>
+
+
+<!-- Statistics -->
 
 <div class="cards">
 
-```
-<div class="card">
-    <h3>Total Students</h3>
-    <p>{{ total_students }}</p>
+    <div class="card">
+
+        <div class="card-header">
+
+            <span class="card-title">
+                Total Students
+            </span>
+
+            <div class="card-icon">
+                👥
+            </div>
+
+        </div>
+
+        <div class="card-value">
+            {{ total_students }}
+        </div>
+
+        <div class="card-description">
+            Registered students
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-header">
+
+            <span class="card-title">
+                Overall Average
+            </span>
+
+            <div class="card-icon">
+                %
+            </div>
+
+        </div>
+
+        <div class="card-value">
+            {{ "%.1f"|format(overall_average or 0) }}%
+        </div>
+
+        <div class="card-description">
+            Average performance
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-header">
+
+            <span class="card-title">
+                Passed
+            </span>
+
+            <div class="card-icon">
+                ✓
+            </div>
+
+        </div>
+
+        <div class="card-value">
+            {{ passed_students }}
+        </div>
+
+        <div class="card-description">
+            Students passed
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-header">
+
+            <span class="card-title">
+                Failed
+            </span>
+
+            <div class="card-icon">
+                !
+            </div>
+
+        </div>
+
+        <div class="card-value">
+            {{ failed_students }}
+        </div>
+
+        <div class="card-description">
+            Need improvement
+        </div>
+
+    </div>
+
 </div>
 
-<div class="card">
-    <h3>Overall Average</h3>
-    <p>
-        {% if overall_average %}
-            {{ "%.2f"|format(overall_average) }}
-        {% else %}
-            0
-        {% endif %}
-    </p>
-</div>
 
-<div class="card">
-    <h3>Passed</h3>
-    <p>{{ passed_students }}</p>
-</div>
+<!-- Recent students -->
 
-<div class="card">
-    <h3>Failed</h3>
-    <p>{{ failed_students }}</p>
-</div>
-```
+<div class="table-card">
 
-</div>
+    <div class="table-header">
 
-<h2>Recent Students</h2>
+        <h3>Recent Students</h3>
 
-<table>
+        <a
+            href="{{ url_for('students.student_list') }}"
+            class="action action-view">
+            View all
+        </a>
 
-```
-<thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Average</th>
-        <th>Grade</th>
-        <th>Status</th>
-    </tr>
-</thead>
+    </div>
 
-<tbody>
 
-    {% for student in recent_students %}
+    {% if recent_students %}
 
-    <tr>
-        <td>{{ student["student_id"] }}</td>
-        <td>{{ student["name"] }}</td>
-        <td>{{ "%.2f"|format(student["average"]) }}</td>
-        <td>{{ student["grade"] }}</td>
-        <td>{{ student["status"] }}</td>
-    </tr>
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Average</th>
+                    <th>Grade</th>
+                    <th>Status</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for student in recent_students %}
+
+                <tr>
+
+                    <td>
+                        <strong>
+                            {{ student["student_id"] }}
+                        </strong>
+                    </td>
+
+                    <td>
+                        {{ student["name"] }}
+                    </td>
+
+                    <td>
+                        {{ "%.1f"|format(student["average"]) }}%
+                    </td>
+
+                    <td>
+                        <span class="grade">
+                            {{ student["grade"] }}
+                        </span>
+                    </td>
+
+                    <td>
+
+                        {% if student["status"] == "PASS" %}
+
+                            <span class="status status-pass">
+                                ● PASS
+                            </span>
+
+                        {% else %}
+
+                            <span class="status status-fail">
+                                ● FAIL
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
 
     {% else %}
 
-    <tr>
-        <td colspan="5">No students found.</td>
-    </tr>
+        <div class="empty-state">
 
-    {% endfor %}
+            <div class="empty-state-icon">
+                📊
+            </div>
 
-</tbody>
-```
+            <h3>No student data yet</h3>
 
-</table>
+            <p>
+                Add your first student to start tracking performance.
+            </p>
+
+            <a
+                href="{{ url_for('students.add_student') }}"
+                class="button">
+                Add First Student
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
 
 {% endblock %}

@@ -1,64 +1,152 @@
 {% extends "base.html" %}
 
-{% block title %}Student Result{% endblock %}
+{% block title %}Student Result | GradePro{% endblock %}
 
 {% block content %}
 
-<h2>Student Result</h2>
+<div class="page-header">
+
+    <div>
+        <h2>Student Result</h2>
+
+        <p>
+            Academic performance report.
+        </p>
+    </div>
+
+    <a
+        href="{{ url_for('students.student_list') }}"
+        class="button button-secondary">
+        ← Back to Students
+    </a>
+
+</div>
+
 
 <div class="result-card">
 
-```
-<h3>{{ student["name"] }}</h3>
+    <div class="result-header">
 
-<p>
-    <strong>Student ID:</strong>
-    {{ student["student_id"] }}
-</p>
+        <div>
 
-<hr>
+            <h3>
+                {{ student["name"] }}
+            </h3>
 
-<p>
-    <strong>Math:</strong>
-    {{ student["math"] }}
-</p>
+            <p>
+                Student ID:
+                <strong>{{ student["student_id"] }}</strong>
+            </p>
 
-<p>
-    <strong>English:</strong>
-    {{ student["english"] }}
-</p>
+        </div>
 
-<p>
-    <strong>Science:</strong>
-    {{ student["science"] }}
-</p>
 
-<hr>
+        {% if student["status"] == "PASS" %}
 
-<p>
-    <strong>Total:</strong>
-    {{ student["total"] }}
-</p>
+            <span class="status status-pass">
+                ● PASS
+            </span>
 
-<p>
-    <strong>Average:</strong>
-    {{ "%.2f"|format(student["average"]) }}
-</p>
+        {% else %}
 
-<p>
-    <strong>Grade:</strong>
-    {{ student["grade"] }}
-</p>
+            <span class="status status-fail">
+                ● FAIL
+            </span>
 
-<p>
-    <strong>Status:</strong>
-    {{ student["status"] }}
-</p>
+        {% endif %}
 
-<a href="{{ url_for('student_list') }}" class="button">
-    Back to Students
-</a>
-```
+    </div>
+
+
+    <div class="result-summary">
+
+        <div class="result-stat">
+
+            <span>
+                Total
+            </span>
+
+            <strong>
+                {{ "%.1f"|format(student["total"]) }}
+            </strong>
+
+        </div>
+
+
+        <div class="result-stat">
+
+            <span>
+                Average
+            </span>
+
+            <strong>
+                {{ "%.1f"|format(student["average"]) }}%
+            </strong>
+
+        </div>
+
+
+        <div class="result-stat">
+
+            <span>
+                Grade
+            </span>
+
+            <strong>
+                {{ student["grade"] }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>Subject</th>
+                <th>Score</th>
+                <th>Performance</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr>
+                <td>Mathematics</td>
+                <td>{{ student["math"] }}</td>
+                <td>{{ "Good" if student["math"] >= 70 else "Needs Improvement" }}</td>
+            </tr>
+
+            <tr>
+                <td>English</td>
+                <td>{{ student["english"] }}</td>
+                <td>{{ "Good" if student["english"] >= 70 else "Needs Improvement" }}</td>
+            </tr>
+
+            <tr>
+                <td>Science</td>
+                <td>{{ student["science"] }}</td>
+                <td>{{ "Good" if student["science"] >= 70 else "Needs Improvement" }}</td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+
+    <div class="form-actions">
+
+        <a
+            href="{{ url_for('students.edit_student', id=student['id']) }}"
+            class="button">
+            Edit Result
+        </a>
+
+    </div>
 
 </div>
 
