@@ -617,34 +617,6 @@ Rather than only studying programming concepts theoretically, I am using progres
 
 ---
 
-# 📌 Future Vision
-
-The long-term goal is to evolve this simple application into a larger education management platform.
-
-Potential future architecture:
-
-```text
-                    Education Platform
-                           │
-          ┌────────────────┼────────────────┐
-          │                │                │
-       Web App          Mobile App         API
-          │                │                │
-          └────────────────┼────────────────┘
-                           │
-                      Backend API
-                           │
-             ┌─────────────┼─────────────┐
-             │             │             │
-          PostgreSQL     Redis        Services
-             │                           │
-             └──────────────┬────────────┘
-                            │
-                       AI Services
-                            │
-                       AI Agents
-```
-
 Possible future features include:
 
 * Teacher management
