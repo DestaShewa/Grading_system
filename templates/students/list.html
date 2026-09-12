@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Students{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h2>Students</h2>
+    <a href="{{ url_for('add_student') }}" class="button">Add Student</a>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Math</th>
+            <th>English</th>
+            <th>Science</th>
+            <th>Total</th>
+            <th>Average</th>
+            <th>Grade</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+```
+<tbody>
+
+    {% for student in students %}
+
+    <tr>
+        <td>{{ student["student_id"] }}</td>
+        <td>{{ student["name"] }}</td>
+        <td>{{ student["math"] }}</td>
+        <td>{{ student["english"] }}</td>
+        <td>{{ student["science"] }}</td>
+        <td>{{ student["total"] }}</td>
+        <td>{{ "%.2f"|format(student["average"]) }}</td>
+        <td>{{ student["grade"] }}</td>
+        <td>{{ student["status"] }}</td>
+
+        <td>
+
+    <a href="{{ url_for('student_result', id=student['id']) }}">
+        View
+    </a>
+
+    <a href="{{ url_for('edit_student', id=student['id']) }}">
+        Edit
+    </a>
+
+    <a href="{{ url_for('delete_student', id=student['id']) }}"
+       onclick="return confirm('Delete this student?')">
+        Delete
+    </a>
+
+</td>
+    </tr>
+
+    {% else %}
+
+    <tr>
+        <td colspan="10">No students found.</td>
+    </tr>
+
+    {% endfor %}
+
+</tbody>
+```
+
+</table>
+
+{% endblock %}

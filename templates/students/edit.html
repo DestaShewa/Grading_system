@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Student{% endblock %}
+
+{% block content %}
+
+<h2>Edit Student</h2>
+
+<form method="POST">
+
+```
+<div>
+    <label>Student ID</label>
+    <input
+        type="text"
+        value="{{ student['student_id'] }}"
+        disabled
+    >
+</div>
+
+<div>
+    <label>Student Name</label>
+    <input
+        type="text"
+        name="name"
+        value="{{ student['name'] }}"
+        required
+    >
+</div>
+
+<div>
+    <label>Math</label>
+    <input
+        type="number"
+        name="math"
+        min="0"
+        max="100"
+        value="{{ student['math'] }}"
+        required
+    >
+</div>
+
+<div>
+    <label>English</label>
+    <input
+        type="number"
+        name="english"
+        min="0"
+        max="100"
+        value="{{ student['english'] }}"
+        required
+    >
+</div>
+
+<div>
+    <label>Science</label>
+    <input
+        type="number"
+        name="science"
+        min="0"
+        max="100"
+        value="{{ student['science'] }}"
+        required
+    >
+</div>
+
+<button type="submit">Update Student</button>
+```
+
+</form>
+
+{% endblock %}
