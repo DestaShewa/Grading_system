@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}
-Dashboard
-{% endblock %}
+{% block title %}Dashboard{% endblock %}
 
 {% block content %}
 
@@ -10,21 +8,74 @@ Dashboard
 
 <div class="cards">
 
-    <div class="card">
-        <h3>Students</h3>
-        <p>0</p>
-    </div>
+```
+<div class="card">
+    <h3>Total Students</h3>
+    <p>{{ total_students }}</p>
+</div>
 
-    <div class="card">
-        <h3>Subjects</h3>
-        <p>0</p>
-    </div>
+<div class="card">
+    <h3>Overall Average</h3>
+    <p>
+        {% if overall_average %}
+            {{ "%.2f"|format(overall_average) }}
+        {% else %}
+            0
+        {% endif %}
+    </p>
+</div>
 
-    <div class="card">
-        <h3>Results</h3>
-        <p>0</p>
-    </div>
+<div class="card">
+    <h3>Passed</h3>
+    <p>{{ passed_students }}</p>
+</div>
+
+<div class="card">
+    <h3>Failed</h3>
+    <p>{{ failed_students }}</p>
+</div>
+```
 
 </div>
+
+<h2>Recent Students</h2>
+
+<table>
+
+```
+<thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Average</th>
+        <th>Grade</th>
+        <th>Status</th>
+    </tr>
+</thead>
+
+<tbody>
+
+    {% for student in recent_students %}
+
+    <tr>
+        <td>{{ student["student_id"] }}</td>
+        <td>{{ student["name"] }}</td>
+        <td>{{ "%.2f"|format(student["average"]) }}</td>
+        <td>{{ student["grade"] }}</td>
+        <td>{{ student["status"] }}</td>
+    </tr>
+
+    {% else %}
+
+    <tr>
+        <td colspan="5">No students found.</td>
+    </tr>
+
+    {% endfor %}
+
+</tbody>
+```
+
+</table>
 
 {% endblock %}

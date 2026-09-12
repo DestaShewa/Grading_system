@@ -8,6 +8,34 @@
     <h2>Students</h2>
     <a href="{{ url_for('add_student') }}" class="button">Add Student</a>
 </div>
+<form method="GET" class="search-form">
+
+    <input
+        type="text"
+        name="search"
+        placeholder="Search by ID or name"
+        value="{{ search }}"
+    >
+
+    <select name="status">
+
+        <option value="">All Status</option>
+
+        <option value="PASS"
+            {% if status == "PASS" %}selected{% endif %}>
+            PASS
+        </option>
+
+        <option value="FAIL"
+            {% if status == "FAIL" %}selected{% endif %}>
+            FAIL
+        </option>
+
+    </select>
+
+    <button type="submit">Search</button>
+
+</form>
 
 <table>
     <thead>
